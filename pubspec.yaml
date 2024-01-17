@@ -18,7 +18,14 @@ dev_dependencies:
 
 flutter: 
   uses-material-design: true
+  assets:
+    - assets/images/
+
   fonts:
+    - family: Mogra
+      fonts:
+        - asset: assets/fonts/Mogra-Regular.ttf
+
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Bold.ttf
