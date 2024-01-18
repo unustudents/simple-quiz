@@ -111,20 +111,32 @@ class HomeView extends GetView<HomeController> {
               ),
               const SizedBox(height: 16),
               Expanded(
-                child: GridView.count(
-                  // primary: false,
-                  // shrinkWrap: true,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  crossAxisCount: 2,
-                  children: [
-                    ...controller.quis
-                        .map(
-                          (e) => cardQuiz(title: e.toString()),
-                        )
-                        .toList(),
-                  ],
-                ),
+                child: controller.quis.isEmpty
+                    ? Center(
+                        child: Text(
+                          'Anda belum mengikuti kuis apapun',
+                          style: TextStyle(
+                              color: AppColors.biruTua,
+                              fontSize: 14.0.sp,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      )
+                    : Obx(
+                        () => GridView.count(
+                          // primary: false,
+                          // shrinkWrap: true,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          crossAxisCount: 2,
+                          children: [
+                            ...controller.quis
+                                .map(
+                                  (e) => cardQuiz(title: e.toString()),
+                                )
+                                .toList(),
+                          ],
+                        ),
+                      ),
               ),
             ],
           ),
