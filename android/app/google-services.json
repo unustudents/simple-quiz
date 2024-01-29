@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "860786914530",
+    "project_id": "kaderisasi-pmii-skripsi-iib",
+    "storage_bucket": "kaderisasi-pmii-skripsi-iib.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860786914530:android:f2fdebf044cd87ad5b9abb",
+        "android_client_info": {
+          "package_name": "com.unustd.kaderisasipmii.pmii"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8DbuXzLSbzI9xYhZHY-r8UTBw2HsciVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860786914530:android:f23a39ed757eced45b9abb",
+        "android_client_info": {
+          "package_name": "com.unustudent.simplequiz.simple_quiz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8DbuXzLSbzI9xYhZHY-r8UTBw2HsciVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
