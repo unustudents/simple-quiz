@@ -5,7 +5,6 @@ import '../../../data/constant/colors.dart';
 import '../../../data/core/extentions.dart';
 import '../../../data/widgets/form.dart';
 import '../../forgotpasswd/views/forgotpasswd_view.dart';
-import '../../../routes/app_pages.dart';
 import '../controllers/signin_controller.dart';
 
 class SigninView extends GetView<SigninController> {
@@ -47,6 +46,7 @@ class SigninView extends GetView<SigninController> {
     );
   }
 
+  // welcome
   Text welcome() {
     return Text(
       'Welcome !',
@@ -59,6 +59,7 @@ class SigninView extends GetView<SigninController> {
     );
   }
 
+  // lupa password atau forgot password
   Row forgotPasswd() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -81,6 +82,7 @@ class SigninView extends GetView<SigninController> {
     );
   }
 
+  // register
   Row linkRegister() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -101,21 +103,28 @@ class SigninView extends GetView<SigninController> {
     );
   }
 
-  ElevatedButton buttonLogin() {
-    return ElevatedButton(
-      onPressed: () {
-        // if (controller.formkey.currentState!.validate()) {
-        Get.offAllNamed(Routes.HOME);
-        // }
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.biruTua,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 15),
-      ),
-      child: Text(
-        'Login',
-        style: TextStyle(fontSize: 18.0.sp, fontWeight: FontWeight.w500),
+  // tombol login
+  Obx buttonLogin() {
+    return Obx(
+      () => ElevatedButton(
+        onPressed: () {
+          if (controller.formkey.currentState!.validate()) {
+            controller.signup();
+          }
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.biruTua,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 15),
+        ),
+        child: controller.l.isFalse
+            ? Text(
+                'Login',
+                style:
+                    TextStyle(fontSize: 18.0.sp, fontWeight: FontWeight.w500),
+              )
+            : const CircularProgressIndicator(
+                backgroundColor: Colors.amber, color: Colors.white),
       ),
     );
   }
