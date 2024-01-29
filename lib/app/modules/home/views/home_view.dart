@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 
 import '../../profil/views/profil_view.dart';
@@ -50,10 +51,10 @@ class HomeView extends GetView<HomeController> {
               Text.rich(
                 TextSpan(
                     text: 'Hay, ',
-                    children: const [
+                    children: [
                       TextSpan(
-                          text: 'Gita Nur Aprilia !',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                          text: '${controller.user?.displayName} !',
+                          style: const TextStyle(fontWeight: FontWeight.bold)),
                     ],
                     style: TextStyle(
                       color: AppColors.biruTua,
@@ -121,21 +122,15 @@ class HomeView extends GetView<HomeController> {
                               fontWeight: FontWeight.w500),
                         ),
                       )
-                    : Obx(
-                        () => GridView.count(
-                          // primary: false,
-                          // shrinkWrap: true,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          crossAxisCount: 2,
-                          children: [
-                            ...controller.quis
-                                .map(
-                                  (e) => cardQuiz(title: e.toString()),
-                                )
-                                .toList(),
-                          ],
-                        ),
+                    : MasonryGridView.count(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        itemCount: controller.quis.length,
+                        itemBuilder: (context, index) {
+                          String title = controller.quis.elementAt(index);
+                          return cardQuiz(title: title);
+                        },
                       ),
               ),
             ],
@@ -148,7 +143,7 @@ class HomeView extends GetView<HomeController> {
   InkWell cardQuiz({required String title}) {
     return InkWell(
       onTap: () {
-        Get.toNamed(Routes.FORGOTPASSWD);
+        Get.toNamed(Routes.PRAQUIZ, arguments: title);
       },
       radius: 20,
       child: Container(
