@@ -4,12 +4,29 @@ import 'package:get/get.dart';
 import '../constant/colors.dart';
 
 class DialogCustom {
-  static errorDialog({required String msg}) {
-    return _generalDialog(msg: msg);
+  static errorDialog(
+      {required String msg, void Function()? onPres, String? teks}) {
+    return _generalDialog(
+        msg: msg, clr: AppColors.error, onPressed: onPres, teks: teks);
   }
 
-  static Future<dynamic> _generalDialog(
-      {String img = 'assets/images/info.png', required String msg}) {
+  static warningDialog(
+      {required String msg, void Function()? onPres, String? teks}) {
+    return _generalDialog(
+        img: 'assets/images/confirm.png',
+        msg: msg,
+        clr: AppColors.warning,
+        onPressed: onPres,
+        teks: teks);
+  }
+
+  static Future<dynamic> _generalDialog({
+    String img = 'assets/images/info.png',
+    required String msg,
+    required Color clr,
+    void Function()? onPressed,
+    String? teks,
+  }) {
     return Get.generalDialog(
       transitionDuration: Durations.medium2,
       transitionBuilder: (context, animation, secondaryAnimation, child) {
@@ -70,8 +87,7 @@ class DialogCustom {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(img,
-                      width: 84, height: 84, color: AppColors.error),
+                  Image.asset(img, width: 84, height: 84, color: clr),
                   const SizedBox(
                     height: 24,
                   ),
@@ -96,24 +112,49 @@ class DialogCustom {
                   const SizedBox(
                     height: 30,
                   ),
-                  SizedBox(
-                    height: 50,
-                    width: 340,
-                    child: ElevatedButton(
-                      onPressed: () => Get.back(),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.error,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                  Row(
+                    children: [
+                      // ketika tidak setuju
+                      if (onPressed != null)
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: onPressed,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: clr,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                side: BorderSide(color: clr, width: 2.5),
+                              ),
+                            ),
+                            child: const Text(
+                              'OKEY',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                      if (onPressed != null) const SizedBox(width: 20),
+
+                      // ketika setuju
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () => Get.back(),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: clr,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: Text(
+                            teks ?? 'OKEY',
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ),
-                      child: const Text(
-                        'OKEY',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                    ),
+                    ],
                   )
                 ],
               ),

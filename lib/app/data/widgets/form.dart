@@ -2,10 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/get_utils/get_utils.dart';
 
 class Formulir {
+  static TextFormField formReguler(
+          {TextEditingController? ctr, required String title}) =>
+      _form(
+        l: title,
+        c: ctr,
+        i: Icons.person_2_rounded,
+        k: TextInputType.emailAddress,
+        v: (p0) {
+          if (GetUtils.isNullOrBlank(p0) == true) {
+            return 'Kolom wajib diisi';
+          }
+          return null;
+        },
+      );
+
+  static TextFormField formToken({TextEditingController? ctr, String? title}) =>
+      _form(
+        l: title ?? 'Token',
+        c: ctr,
+        i: Icons.token_rounded,
+        k: TextInputType.emailAddress,
+        v: (p0) {
+          if (GetUtils.isNullOrBlank(p0) == true) {
+            return 'Kolom wajib diisi';
+          }
+          if (!GetUtils.isLengthGreaterOrEqual(p0, 8)) {
+            return 'Masukan minimal 8 karakter';
+          }
+          return null;
+        },
+      );
+
   static TextFormField formEmail({TextEditingController? ctr}) => _form(
         l: 'Email',
         c: ctr,
-        i: Icons.person_2_rounded,
+        i: Icons.alternate_email_rounded,
         k: TextInputType.emailAddress,
         v: (p0) {
           if (GetUtils.isNullOrBlank(p0) == true) {
