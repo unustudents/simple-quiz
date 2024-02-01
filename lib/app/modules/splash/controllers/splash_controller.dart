@@ -11,7 +11,7 @@ class SplashController extends GetxController {
     super.onInit();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null && user?.emailVerified == true) {
+      if (user != null && user.emailVerified == true) {
         autoRedirect(signin: true);
       } else {
         autoRedirect(signin: false);
