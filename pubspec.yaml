@@ -2,32 +2,33 @@ name: simple_quiz
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment:
+environment: 
   sdk: '>=3.2.3 <4.0.0'
 
-dependencies:
+dependencies: 
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
-  flutter:
-    sdk: flutter
   flutter_staggered_grid_view: ^0.7.0
   get: ^4.6.6
-
-dev_dependencies:
-  flutter_lints: ^2.0.0
-  flutter_test:
+  cloud_firestore: ^4.14.0
+  flutter: 
     sdk: flutter
 
-flutter:
-  assets:
+dev_dependencies: 
+  flutter_lints: ^2.0.0
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  assets: 
     - assets/images/
-  fonts:
+  fonts: 
     - family: Mogra
-      fonts:
+      fonts: 
         - asset: assets/fonts/Mogra-Regular.ttf
     - family: Poppins
-      fonts:
+      fonts: 
         - asset: assets/fonts/Poppins-Bold.ttf
         - asset: assets/fonts/Poppins-Medium.ttf
         - asset: assets/fonts/Poppins-Regular.ttf
