@@ -18,11 +18,18 @@ Future<void> main() async {
       debugShowCheckedModeBanner: false,
       getPages: AppPages.routes,
       theme: ThemeData(
-        colorScheme: lightColorScheme,
         fontFamily: 'Poppins',
+        colorScheme: lightColorScheme.copyWith(background: Colors.white),
+        appBarTheme: AppBarTheme(
+          color: lightColorScheme.primary,
+          centerTitle: true,
+          foregroundColor: Colors.white,
+          titleTextStyle:
+              const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+        ),
       ),
       defaultTransition: Transition.circularReveal,
-      transitionDuration: Durations.short2,
+      transitionDuration: Durations.medium3,
     ),
   );
 }
