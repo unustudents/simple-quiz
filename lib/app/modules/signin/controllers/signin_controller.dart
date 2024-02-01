@@ -14,7 +14,7 @@ class SigninController extends GetxController {
   final emailC = TextEditingController();
   final passC = TextEditingController();
 
-  void signup() async {
+  void onSignIn() async {
     l.value = true;
     try {
       await FirebaseAuth.instance

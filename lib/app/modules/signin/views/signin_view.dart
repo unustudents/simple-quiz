@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../data/widgets/button.dart';
+import '../../../routes/app_pages.dart';
+import '../../register/bindings/register_binding.dart';
+import '../../register/views/register_view.dart';
 import '../../../data/constant/colors.dart';
 import '../../../data/core/extentions.dart';
 import '../../../data/widgets/form.dart';
-import '../../forgotpasswd/views/forgotpasswd_view.dart';
 import '../controllers/signin_controller.dart';
 
 class SigninView extends GetView<SigninController> {
@@ -21,22 +24,39 @@ class SigninView extends GetView<SigninController> {
               shrinkWrap: true,
               padding: const EdgeInsets.all(20),
               children: [
+                // title
                 welcome(),
                 const SizedBox(height: 47),
+
+                // form - email
                 Formulir.formEmail(ctr: controller.emailC),
                 const SizedBox(height: 24),
+
+                // form - password
                 Obx(() => Formulir.formPass(
                       ctr: controller.passC,
                       visibil: controller.visibil.value,
-                      onPres: () {
-                        controller.visibil.toggle();
-                      },
+                      onPres: () => controller.visibil.toggle(),
                     )),
                 const SizedBox(height: 14),
+
+                // lupa password
                 forgotPasswd(),
                 const SizedBox(height: 24),
-                buttonLogin(),
+
+                // tombol login
+                Obx(() => buttonBlueObx(
+                      onPressed: () {
+                        if (controller.formkey.currentState!.validate()) {
+                          controller.onSignIn();
+                        }
+                      },
+                      l: controller.l.value,
+                      teks: 'Login',
+                    )),
                 const SizedBox(height: 58),
+
+                // link ke register
                 linkRegister(),
               ],
             ),
@@ -65,10 +85,7 @@ class SigninView extends GetView<SigninController> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         GestureDetector(
-          onTap: () {
-            Get.to(() => const ForgotpasswdView(),
-                transition: Transition.circularReveal);
-          },
+          onTap: () => Get.toNamed(Routes.FORGOTPASSWD),
           child: Text(
             'Forgot password ?',
             style: TextStyle(
@@ -89,7 +106,12 @@ class SigninView extends GetView<SigninController> {
       children: [
         const Text("Don't have an account yet? "),
         GestureDetector(
-          onTap: () {},
+          onTap: () => Get.to(
+            () => const RegisterView(),
+            binding: RegisterBinding(),
+            transition: Transition.rightToLeftWithFade,
+            duration: Durations.medium2,
+          ),
           child: Text(
             'Register',
             style: TextStyle(
@@ -100,32 +122,6 @@ class SigninView extends GetView<SigninController> {
           ),
         ),
       ],
-    );
-  }
-
-  // tombol login
-  Obx buttonLogin() {
-    return Obx(
-      () => ElevatedButton(
-        onPressed: () {
-          if (controller.formkey.currentState!.validate()) {
-            controller.signup();
-          }
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.biruTua,
-          foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 15),
-        ),
-        child: controller.l.isFalse
-            ? Text(
-                'Login',
-                style:
-                    TextStyle(fontSize: 18.0.sp, fontWeight: FontWeight.w500),
-              )
-            : const CircularProgressIndicator(
-                backgroundColor: Colors.amber, color: Colors.white),
-      ),
     );
   }
 }
