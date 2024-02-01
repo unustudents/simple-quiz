@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 
-import '../../profil/views/profil_view.dart';
 import '../../../routes/app_pages.dart';
 import '../../../data/constant/colors.dart';
 import '../../../data/core/extentions.dart';
@@ -31,9 +30,7 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {
-                      Get.to(() => const ProfilView());
-                    },
+                    onTap: () => Get.toNamed(Routes.PROFIL),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: SizedBox(
@@ -142,9 +139,7 @@ class HomeView extends GetView<HomeController> {
 
   InkWell cardQuiz({required String title}) {
     return InkWell(
-      onTap: () {
-        Get.toNamed(Routes.PRAQUIZ, arguments: title);
-      },
+      onTap: () => Get.toNamed(Routes.PRAQUIZ, arguments: title),
       radius: 20,
       child: Container(
         padding: EdgeInsets.all(3.0.wp),
