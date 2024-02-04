@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 
 import '../../../data/widgets/button.dart';
 import '../../../routes/app_pages.dart';
-import '../../register/bindings/register_binding.dart';
-import '../../register/views/register_view.dart';
 import '../../../data/constant/colors.dart';
 import '../../../data/core/extentions.dart';
 import '../../../data/widgets/form.dart';
@@ -19,7 +17,7 @@ class SigninView extends GetView<SigninController> {
       body: SafeArea(
         child: Center(
           child: Form(
-            key: controller.formkey,
+            key: controller.formkeySignin,
             child: ListView(
               shrinkWrap: true,
               padding: const EdgeInsets.all(20),
@@ -47,7 +45,7 @@ class SigninView extends GetView<SigninController> {
                 // tombol login
                 Obx(() => buttonBlueObx(
                       onPressed: () {
-                        if (controller.formkey.currentState!.validate()) {
+                        if (controller.formkeySignin.currentState!.validate()) {
                           controller.onSignIn();
                         }
                       },
@@ -106,12 +104,7 @@ class SigninView extends GetView<SigninController> {
       children: [
         const Text("Don't have an account yet? "),
         GestureDetector(
-          onTap: () => Get.to(
-            () => const RegisterView(),
-            binding: RegisterBinding(),
-            transition: Transition.rightToLeftWithFade,
-            duration: Durations.medium2,
-          ),
+          onTap: () => Get.offNamed(Routes.REGISTER),
           child: Text(
             'Register',
             style: TextStyle(
