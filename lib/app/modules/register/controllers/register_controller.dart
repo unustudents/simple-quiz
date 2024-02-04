@@ -8,7 +8,7 @@ import '../../../data/widgets/snack.dart';
 import '../../../routes/app_pages.dart';
 
 class RegisterController extends GetxController {
-  final formkey = GlobalKey<FormState>();
+  final formkeyRegis = GlobalKey<FormState>();
   final l = false.obs;
   final visible = true.obs;
   final tokenX = false.obs;
@@ -29,8 +29,7 @@ class RegisterController extends GetxController {
   // membuat akun
   Future<void> onCreateAccount() async {
     l.value = true;
-    UserModel data =
-        UserModel(email: emailT.text, name: namaT.text, password: paswdT.text);
+    UserModel data = UserModel(email: emailT.text, name: namaT.text);
     try {
       final credential = await _auth.createUserWithEmailAndPassword(
           email: emailT.text, password: paswdT.text);
@@ -39,7 +38,8 @@ class RegisterController extends GetxController {
         await _auth.currentUser!.updateDisplayName(namaT.text);
         onRegister(uid, data);
         await _auth.currentUser!.sendEmailVerification();
-        Get.offAllNamed(Routes.SPLASH);
+        await _auth.signOut();
+        Get.offNamed(Routes.SIGNIN);
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -66,11 +66,5 @@ class RegisterController extends GetxController {
         .then((v) => SnackbarCustom.successToast(msg: 'Berhasil registrasi'))
         .catchError((e) =>
             SnackbarCustom.errorToast(msg: 'Tidak dapat registrasi, error $e'));
-  }
-
-  @override
-  void onClose() {
-    Get.delete();
-    super.onClose();
   }
 }
