@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../routes/app_pages.dart';
 import '../../../data/core/extentions.dart';
 import '../../../data/widgets/button.dart';
 import '../../../data/widgets/form.dart';
@@ -11,10 +12,15 @@ class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Registrasi')),
+      appBar: AppBar(
+        title: const Text('Registrasi'),
+        leading: IconButton(
+            onPressed: () => Get.offNamed(Routes.SIGNIN),
+            icon: const Icon(Icons.arrow_back)),
+      ),
       body: Center(
         child: Form(
-          key: controller.formkey,
+          key: controller.formkeyRegis,
           /* menggunakan streambuilder untuk memantau value dari token apakah true atau false, 
           jika true maka form akan muncul, jika false maka form akan menutup */
           child: StreamBuilder(
@@ -54,7 +60,7 @@ class RegisterView extends GetView<RegisterController> {
                           // formulir - tombol
                           Obx(() => buttonBlueObx(
                                 onPressed: () {
-                                  if (controller.formkey.currentState!
+                                  if (controller.formkeyRegis.currentState!
                                       .validate()) controller.onCreateAccount();
                                 },
                                 l: controller.l.value,
