@@ -12,6 +12,8 @@ class HomeController extends GetxController {
     'Rasa lelah',
   ];
 
+  final currentIndex = 0.obs;
+
   final user = FirebaseAuth.instance.currentUser;
   dataUser() {
     if (user != null) {

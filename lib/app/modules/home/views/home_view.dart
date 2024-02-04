@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 
+import '../../../data/widgets/salomon_bottom_bar.dart';
 import '../../../routes/app_pages.dart';
 import '../../../data/constant/colors.dart';
 import '../../../data/core/extentions.dart';
@@ -132,6 +133,42 @@ class HomeView extends GetView<HomeController> {
               ),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Obx(
+        () => SalomonBottomBar(
+          currentIndex: controller.currentIndex.value,
+          onTap: (i) => controller.currentIndex.value = i,
+          // onTap: (i) => setState(() => _currentIndex = i),
+          items: [
+            /// Home
+            SalomonBottomBarItem(
+              icon: const Icon(Icons.home_filled),
+              title: const Text("Home"),
+              selectedColor: Colors.purple,
+            ),
+
+            /// Likes
+            SalomonBottomBarItem(
+              icon: const Icon(Icons.favorite_border),
+              title: const Text("Likes"),
+              selectedColor: Colors.pink,
+            ),
+
+            /// Search
+            SalomonBottomBarItem(
+              icon: const Icon(Icons.search),
+              title: const Text("Search"),
+              selectedColor: Colors.orange,
+            ),
+
+            /// Profile
+            SalomonBottomBarItem(
+              icon: const Icon(Icons.person_outline_rounded),
+              title: const Text("Profile"),
+              selectedColor: Colors.teal,
+            ),
+          ],
         ),
       ),
     );
