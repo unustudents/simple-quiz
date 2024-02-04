@@ -7,25 +7,27 @@ import '../../../routes/app_pages.dart';
 import '../../../data/widgets/snack.dart';
 
 class SigninController extends GetxController {
-  final formkey = GlobalKey<FormState>();
+  final formkeySignin = GlobalKey<FormState>();
   final visibil = true.obs;
   final l = false.obs;
 
   final emailC = TextEditingController();
   final passC = TextEditingController();
+  final _auth = FirebaseAuth.instance;
 
   void onSignIn() async {
     l.value = true;
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: emailC.text, password: passC.text);
-      if (FirebaseAuth.instance.currentUser!.emailVerified == true) {
+      await _auth.signInWithEmailAndPassword(
+          email: emailC.text, password: passC.text);
+      if (_auth.currentUser!.emailVerified == true) {
         Get.offAllNamed(Routes.HOME);
       } else {
-        await FirebaseAuth.instance.currentUser!.sendEmailVerification();
         DialogCustom.errorDialog(
             msg:
-                'Email anda belum diverifikasi, silahkan cek email anda untuk verifikasi');
+                'Email anda belum diverifikasi, silahkan cek email untuk verifikasi, atau tekan tombol dibawah untuk mengirim ulang kode verifikasi',
+            teks: 'KIRIM ULANG');
+        await _auth.currentUser!.sendEmailVerification();
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
