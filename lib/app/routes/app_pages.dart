@@ -1,9 +1,15 @@
 import 'package:get/get.dart';
 
+import '../modules/addquiz/bindings/addquiz_binding.dart';
+import '../modules/addquiz/views/addquiz_view.dart';
+import '../modules/allquiz/bindings/allquiz_binding.dart';
+import '../modules/allquiz/views/allquiz_view.dart';
 import '../modules/forgotpasswd/bindings/forgotpasswd_binding.dart';
 import '../modules/forgotpasswd/views/forgotpasswd_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/organisation/bindings/organisation_binding.dart';
+import '../modules/organisation/views/organisation_view.dart';
 import '../modules/praquiz/bindings/praquiz_binding.dart';
 import '../modules/praquiz/views/praquiz_view.dart';
 import '../modules/profil/bindings/profil_binding.dart';
@@ -12,8 +18,8 @@ import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/signin/bindings/signin_binding.dart';
 import '../modules/signin/views/signin_view.dart';
-import '../modules/splash/bindings/splash_binding.dart';
-import '../modules/splash/views/splash_view.dart';
+import '../modules/splash/splash_binding.dart';
+import '../modules/splash/splash_view.dart';
 
 part 'app_routes.dart';
 
@@ -51,13 +57,28 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PRAQUIZ,
-      page: () => const PraquizView(),
+      page: () => PraquizView(),
       binding: PraquizBinding(),
     ),
     GetPage(
       name: _Paths.REGISTER,
       page: () => const RegisterView(),
       binding: RegisterBinding(),
+    ),
+    GetPage(
+      name: _Paths.ORGANISATION,
+      page: () => const OrganisationView(),
+      binding: OrganisationBinding(),
+    ),
+    GetPage(
+      name: _Paths.ALLQUIZ,
+      page: () => const AllquizView(),
+      binding: AllquizBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADDQUIZ,
+      page: () => const AddquizView(),
+      binding: AddquizBinding(),
     ),
   ];
 }
