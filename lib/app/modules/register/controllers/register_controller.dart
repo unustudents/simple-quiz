@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../data/models/user_model.dart';
+import '../../../data/models/models.dart';
 import '../../../data/widgets/snack.dart';
 import '../../../routes/app_pages.dart';
 
