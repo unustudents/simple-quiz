@@ -3,18 +3,22 @@ import 'package:get/get_utils/src/get_utils/get_utils.dart';
 
 class Formulir {
   static TextFormField formReguler(
-          {TextEditingController? ctr, required String title}) =>
+          {TextEditingController? ctr,
+          required String title,
+          IconData? icon,
+          String? Function(String?)? validator}) =>
       _form(
         l: title,
         c: ctr,
-        i: Icons.person_2_rounded,
-        k: TextInputType.emailAddress,
-        v: (p0) {
-          if (GetUtils.isNullOrBlank(p0) == true) {
-            return 'Kolom wajib diisi';
-          }
-          return null;
-        },
+        i: icon ?? Icons.person_2_rounded,
+        k: TextInputType.text,
+        v: validator ??
+            (p0) {
+              if (GetUtils.isNullOrBlank(p0) == true) {
+                return 'Kolom wajib diisi';
+              }
+              return null;
+            },
       );
 
   static TextFormField formToken({TextEditingController? ctr, String? title}) =>
