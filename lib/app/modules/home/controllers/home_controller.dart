@@ -1,20 +1,19 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  final quis = <String>[
-    'Pahlawan revolusi',
-    'Pentingnya intelektual',
-    'Rasa lelah',
-    'Pentingnya intelektual',
-    'Rasa lelah',
-  ];
-
   final currentIndex = 0.obs;
 
   final user = FirebaseAuth.instance.currentUser;
+  final _firestore = FirebaseFirestore.instance;
+
+  Future<QuerySnapshot<Map<String, dynamic>>> categoryQuiz() async {
+    return await _firestore.collection('category_quiz').get();
+  }
+
   dataUser() {
     if (user != null) {
       // Name, email address, and profile photo URL
