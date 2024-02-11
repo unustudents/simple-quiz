@@ -7,7 +7,7 @@ class PraquizController extends GetxController {
   String uid = Get.arguments;
   final qnaList = Rx<List<QueryDocumentSnapshot<Map<String, dynamic>>>>([]);
   // final selected = false.obs;
-  Map<String, Map<String, dynamic>> record = {};
+  RxMap record = {}.obs;
   QueryDocumentSnapshot<Map<String, dynamic>>? lastDocument;
 
   final _firestore = FirebaseFirestore.instance.collection('all_quiz');
@@ -54,7 +54,7 @@ class PraquizController extends GetxController {
     return _firestore
         .doc(uid)
         .collection('pretest')
-        .limit(3)
+        // .limit(3)
         .snapshots()
         .map((event) => event.docs);
   }
@@ -74,6 +74,8 @@ class PraquizController extends GetxController {
       {required String uid,
       required String answerTrue,
       required String answerCurrent}) {
-    record[uid] = {'answer': answerTrue, 'status': answerCurrent};
+    final bool status = answerCurrent == answerTrue;
+    record[uid] =
+        {'answer': answerTrue, 'current': answerCurrent, 'status': status}.obs;
   }
 }

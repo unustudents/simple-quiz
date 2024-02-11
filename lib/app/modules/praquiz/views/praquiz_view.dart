@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../data/constant/colors.dart';
 import '../../../data/widgets/button.dart';
 import '../../../data/widgets/card.dart';
 import '../../../data/widgets/form.dart';
@@ -8,29 +9,30 @@ import '../../../data/core/extentions.dart';
 import '../controllers/praquiz_controller.dart';
 
 class PraquizView extends GetView<PraquizController> {
-  PraquizView({Key? key}) : super(key: key);
-  final ScrollController _scrollController = ScrollController();
+  const PraquizView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        controller.loadMoreData(controller.uid);
-      }
-    });
-
+    // variabel
     var soal = TextEditingController();
     var jawabTrue = TextEditingController();
     var jawab2 = TextEditingController();
     var jawab3 = TextEditingController();
     var jawab4 = TextEditingController();
-
     final formkeyAddQuiz = GlobalKey<FormState>();
+    Map<String, TextEditingController> abjad = {
+      'Soal': soal,
+      'Jawaban Benar': jawabTrue,
+      'Jawaban ke 2': jawab2,
+      'Jawaban ke 3': jawab3,
+      'Jawaban ke 4': jawab4
+    };
+
     return Scaffold(
       appBar: AppBar(title: const Text('Pra-Test')),
       body: Obx(() {
         if (controller.qnaList.value.isEmpty) {
+          // jika tidak ada soal
           return Center(
             child: Text(
               'Quiz not created ! 😩',
@@ -39,12 +41,23 @@ class PraquizView extends GetView<PraquizController> {
             ),
           );
         } else {
+          // jika ada soal
           return ListView.builder(
-            controller: _scrollController,
-            physics: const PageScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.all(4.0.wp),
-            itemCount: controller.qnaList.value.length,
+            itemCount:
+                controller.qnaList.value.length + 1, // jangan lupa ditambah + 1
             itemBuilder: (context, index) {
+              // harus paling atas supaya bisa di posisi paling bawah
+              // kalau di bawah variabel maka akan menjalankan variabelnya dulu
+              if (index == controller.qnaList.value.length) {
+                return buttonBlueObx(
+                    l: controller.l.value,
+                    onPressed: () => print(controller.record),
+                    teks: 'NEXT');
+              }
+
+              // variabel
               String uid = controller.qnaList.value[index].id;
               Map<String, dynamic> item =
                   controller.qnaList.value[index].data();
@@ -53,25 +66,31 @@ class PraquizView extends GetView<PraquizController> {
                   .map((e) => e.value)
                   .toList()
                 ..shuffle();
+              const abjad = <String>['A', 'B', 'C', 'D'];
 
-              List abjad = <String>['A', 'B', 'C', 'D'];
-
+              // badan soal
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // soal
                   Text("${index + 1}. ${item['question']}"),
                   const SizedBox(height: 15),
-                  ...options.asMap().entries.map((e) => CardCustom.cardOption(
-                        title: e.value,
-                        teks: abjad[e.key],
-                        selected: controller.record[uid]!['status'] ?? false,
-                        onTap: () {
-                          controller.answerQuestion(
-                            uid: uid,
-                            answerTrue: item['option_true'],
-                            answerCurrent: e.value,
-                          );
-                        },
+
+                  // pilihan / jawaban
+                  ...options.asMap().entries.map((e) => Obx(
+                        () => CardCustom.cardOption(
+                          title: e.value,
+                          teks: abjad[e.key],
+                          selected:
+                              controller.record[uid]?['current'] == e.value,
+                          onTap: () {
+                            controller.answerQuestion(
+                              uid: uid,
+                              answerTrue: item['option_true'],
+                              answerCurrent: e.value,
+                            );
+                          },
+                        ),
                       )),
                   const SizedBox(height: 35),
                 ],
@@ -81,62 +100,30 @@ class PraquizView extends GetView<PraquizController> {
         }
       }),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.biruTua,
+        foregroundColor: Colors.white,
+        child: const Icon(Icons.add),
         onPressed: () => Get.bottomSheet(
-          Card(
-            child: Column(
-              children: [
-                FractionallySizedBox(
-                  widthFactor: 0.25,
-                  child: Container(
-                    height: 5.0,
-                    decoration: const BoxDecoration(
-                      color: Colors.blueGrey,
-                      borderRadius: BorderRadius.all(Radius.circular(2.5)),
-                    ),
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 12.0,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Expanded(
-                  child: Form(
-                    key: formkeyAddQuiz,
-                    child: ListView(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.fromLTRB(4.0.wp, 0, 4.0.wp, 6.0.wp),
-                      physics: const PageScrollPhysics(),
-                      children: [
-                        Formulir.formReguler(title: 'Soal', ctr: soal),
-                        SizedBox(height: 5.0.wp),
-                        Formulir.formReguler(
-                            title: 'Jawaban Benar', ctr: jawabTrue),
-                        SizedBox(height: 5.0.wp),
-                        Formulir.formReguler(
-                            title: 'Jawaban ke 2', ctr: jawab2),
-                        SizedBox(height: 5.0.wp),
-                        Formulir.formReguler(
-                            title: 'Jawaban ke 3', ctr: jawab3),
-                        SizedBox(height: 5.0.wp),
-                        Formulir.formReguler(
-                            title: 'Jawaban ke 4', ctr: jawab4),
-                        SizedBox(height: 5.0.wp),
-                        Obx(() => buttonBlueObx(
-                            l: controller.l.value,
-                            onPressed: () {
-                              if (formkeyAddQuiz.currentState!.validate()) {
-                                controller.addQuiz(soal.text, jawabTrue.text,
-                                    jawab2.text, jawab3.text, jawab4.text);
-                              }
-                            },
-                            teks: 'TAMBAH')),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          CardCustom.formBottomSheet(key: formkeyAddQuiz, children: [
+            // formulir
+            ...abjad.entries.map((e) => Column(
+                  children: [
+                    Formulir.formReguler(title: e.key, ctr: e.value),
+                    SizedBox(height: 5.0.wp)
+                  ],
+                )),
+
+            // tombol
+            Obx(() => buttonBlueObx(
+                l: controller.l.value,
+                onPressed: () {
+                  if (formkeyAddQuiz.currentState!.validate()) {
+                    controller.addQuiz(soal.text, jawabTrue.text, jawab2.text,
+                        jawab3.text, jawab4.text);
+                  }
+                },
+                teks: 'TAMBAH')),
+          ]),
         ),
       ),
     );

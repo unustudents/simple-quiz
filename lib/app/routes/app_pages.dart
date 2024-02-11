@@ -57,7 +57,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PRAQUIZ,
-      page: () => PraquizView(),
+      page: () => const PraquizView(),
       binding: PraquizBinding(),
     ),
     GetPage(
