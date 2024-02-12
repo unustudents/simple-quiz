@@ -8,6 +8,8 @@ import '../modules/forgotpasswd/bindings/forgotpasswd_binding.dart';
 import '../modules/forgotpasswd/views/forgotpasswd_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/materi/bindings/materi_binding.dart';
+import '../modules/materi/views/materi_view.dart';
 import '../modules/organisation/bindings/organisation_binding.dart';
 import '../modules/organisation/views/organisation_view.dart';
 import '../modules/praquiz/bindings/praquiz_binding.dart';
@@ -79,6 +81,11 @@ class AppPages {
       name: _Paths.ADDQUIZ,
       page: () => const AddquizView(),
       binding: AddquizBinding(),
+    ),
+    GetPage(
+      name: _Paths.MATERI,
+      page: () => const MateriView(),
+      binding: MateriBinding(),
     ),
   ];
 }
