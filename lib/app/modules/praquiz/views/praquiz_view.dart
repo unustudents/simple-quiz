@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simple_quiz/app/data/constant/teks.dart';
 
 import '../../../data/constant/colors.dart';
 import '../../../data/widgets/button.dart';
@@ -53,7 +54,19 @@ class PraquizView extends GetView<PraquizController> {
               if (index == controller.qnaList.value.length) {
                 return buttonBlueObx(
                     l: controller.l.value,
-                    onPressed: () => print(controller.record),
+                    onPressed: () {
+                      Get.bottomSheet(
+                        CardCustom.formBottomSheet(
+                          children: [
+                            Image.asset(
+                              AppTexts.background,
+                              fit: BoxFit.cover,
+                              width: Get.width / 2,
+                            )
+                          ],
+                        ),
+                      );
+                    },
                     teks: 'NEXT');
               }
 
