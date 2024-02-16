@@ -6,6 +6,7 @@ class CardCustom {
   static Card formBottomSheet({Key? key, required List<Widget> children}) {
     return Card(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           FractionallySizedBox(
             widthFactor: 0.25,
@@ -19,13 +20,13 @@ class CardCustom {
             ),
           ),
           const SizedBox(height: 10),
-          Expanded(
+          Flexible(
             child: Form(
               key: key,
               child: ListView(
                 shrinkWrap: true,
                 padding: EdgeInsets.fromLTRB(4.0.wp, 0, 4.0.wp, 6.0.wp),
-                physics: const PageScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 children: children,
               ),
             ),
