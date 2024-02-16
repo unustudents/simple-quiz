@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 
-import '../modules/addquiz/bindings/addquiz_binding.dart';
-import '../modules/addquiz/views/addquiz_view.dart';
 import '../modules/allquiz/bindings/allquiz_binding.dart';
 import '../modules/allquiz/views/allquiz_view.dart';
 import '../modules/forgotpasswd/bindings/forgotpasswd_binding.dart';
@@ -76,11 +74,6 @@ class AppPages {
       name: _Paths.ALLQUIZ,
       page: () => const AllquizView(),
       binding: AllquizBinding(),
-    ),
-    GetPage(
-      name: _Paths.ADDQUIZ,
-      page: () => const AddquizView(),
-      binding: AddquizBinding(),
     ),
     GetPage(
       name: _Paths.MATERI,
