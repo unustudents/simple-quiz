@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simple_quiz/app/data/constant/teks.dart';
 
+import '../../../routes/app_pages.dart';
 import '../../../data/constant/colors.dart';
 import '../../../data/widgets/button.dart';
 import '../../../data/widgets/card.dart';
@@ -21,7 +21,7 @@ class PraquizView extends GetView<PraquizController> {
     var jawab3 = TextEditingController();
     var jawab4 = TextEditingController();
     final formkeyAddQuiz = GlobalKey<FormState>();
-    Map<String, TextEditingController> abjad = {
+    Map<String, TextEditingController> soalOption = {
       'Soal': soal,
       'Jawaban Benar': jawabTrue,
       'Jawaban ke 2': jawab2,
@@ -54,19 +54,20 @@ class PraquizView extends GetView<PraquizController> {
               if (index == controller.qnaList.value.length) {
                 return buttonBlueObx(
                     l: controller.l.value,
-                    onPressed: () {
-                      Get.bottomSheet(
-                        CardCustom.formBottomSheet(
-                          children: [
-                            Image.asset(
-                              AppTexts.background,
-                              fit: BoxFit.cover,
-                              width: Get.width / 2,
-                            )
-                          ],
-                        ),
-                      );
-                    },
+                    onPressed: controller.record.values.length !=
+                            controller.qnaList.value.length
+                        ? null
+                        : () {
+                            Get.toNamed(Routes.MATERI);
+                            // Get.bottomSheet(
+                            //   CardCustom.formBottomSheet(
+                            //     children: [
+                            //       Obx(() => Text(controller.record.values.length
+                            //           .toString()))
+                            //     ],
+                            //   ),
+                            // );
+                          },
                     teks: 'NEXT');
               }
 
@@ -119,7 +120,7 @@ class PraquizView extends GetView<PraquizController> {
         onPressed: () => Get.bottomSheet(
           CardCustom.formBottomSheet(key: formkeyAddQuiz, children: [
             // formulir
-            ...abjad.entries.map((e) => Column(
+            ...soalOption.entries.map((e) => Column(
                   children: [
                     Formulir.formReguler(title: e.key, ctr: e.value),
                     SizedBox(height: 5.0.wp)
@@ -131,8 +132,13 @@ class PraquizView extends GetView<PraquizController> {
                 l: controller.l.value,
                 onPressed: () {
                   if (formkeyAddQuiz.currentState!.validate()) {
-                    controller.addQuiz(soal.text, jawabTrue.text, jawab2.text,
-                        jawab3.text, jawab4.text);
+                    controller.addQuiz(
+                      question: soal.text,
+                      optionTrue: jawabTrue.text,
+                      option2: jawab2.text,
+                      option3: jawab3.text,
+                      option4: jawab4.text,
+                    );
                   }
                 },
                 teks: 'TAMBAH')),

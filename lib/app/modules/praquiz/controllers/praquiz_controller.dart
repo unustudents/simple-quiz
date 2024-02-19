@@ -6,7 +6,6 @@ import '../../../data/widgets/snack.dart';
 class PraquizController extends GetxController {
   String uid = Get.arguments;
   final qnaList = Rx<List<QueryDocumentSnapshot<Map<String, dynamic>>>>([]);
-  // final selected = false.obs;
   RxMap record = {}.obs;
   QueryDocumentSnapshot<Map<String, dynamic>>? lastDocument;
 
@@ -25,15 +24,21 @@ class PraquizController extends GetxController {
     super.onReady();
   }
 
-  void addQuiz(String question, String optionTrue, String option2,
-      String option3, String option4) async {
+  void addQuiz({
+    required String question,
+    required String optionTrue,
+    required String option2,
+    required String option3,
+    required String option4,
+  }) async {
     l.value = true;
     AddQuistion data = AddQuistion(
-        question: question,
-        optionTrue: optionTrue,
-        option2: option2,
-        option3: option3,
-        option4: option4);
+      question: question,
+      optionTrue: optionTrue,
+      option2: option2,
+      option3: option3,
+      option4: option4,
+    );
 
     await _firestore
         .doc(uid)
@@ -54,28 +59,27 @@ class PraquizController extends GetxController {
     return _firestore
         .doc(uid)
         .collection('pretest')
-        // .limit(3)
         .snapshots()
         .map((event) => event.docs);
   }
 
-  Future<void> loadMoreData(String uid) async {
-    QuerySnapshot<Map<String, dynamic>> snapshot = await _firestore
-        .doc(uid)
-        .collection('pretest')
-        .limit(3)
-        .startAfterDocument(qnaList.value.last)
-        .get();
-    qnaList.value = [...qnaList.value, ...snapshot.docs..shuffle()];
-    qnaList.refresh();
-  }
+  // Future<void> loadMoreData(String uid) async {
+  //   QuerySnapshot<Map<String, dynamic>> snapshot = await _firestore
+  //       .doc(uid)
+  //       .collection('pretest')
+  //       .limit(3)
+  //       .startAfterDocument(qnaList.value.last)
+  //       .get();
+  //   qnaList.value = [...qnaList.value, ...snapshot.docs..shuffle()];
+  //   qnaList.refresh();
+  // }
 
-  answerQuestion(
+  RxMap<String, Object> answerQuestion(
       {required String uid,
       required String answerTrue,
       required String answerCurrent}) {
     final bool status = answerCurrent == answerTrue;
-    record[uid] =
+    return record[uid] =
         {'answer': answerTrue, 'current': answerCurrent, 'status': status}.obs;
   }
 }
