@@ -1,0 +1,18 @@
+{
+    "user_model": {
+        "name": "Nanda",
+        "email": "nanda@email.com"
+    },
+    "create_quiz": {
+        "title": "ini judul",
+        "description": "",
+        "category": "JKAshhladfhaid123"
+    },
+    "add_quiz": {
+        "question": "ini pertanyaan",
+        "option_true": "jawaban benar",
+        "option_2": "jawaban 2",
+        "option_3": "jawaban 3",
+        "option_4": "jawaban 4"
+    }
+}
