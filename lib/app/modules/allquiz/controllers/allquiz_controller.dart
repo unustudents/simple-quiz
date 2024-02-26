@@ -1,36 +1,43 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../data/providers/provider.dart';
 import '../../../data/models/model_model.dart';
-// import '../../../data/models/models.dart';
 import '../../../data/widgets/snack.dart';
 
 class AllquizController extends GetxController {
-  final l = false.obs;
-  final _firestore = FirebaseFirestore.instance.collection('all_quiz');
+  // variable
+  final isLoading = false.obs;
+  var title = TextEditingController();
+  var description = TextEditingController();
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> fetchAllQuiz(String uid) async* {
-    yield* _firestore.where('category', isEqualTo: uid).snapshots();
-  }
+  // CREATE QUIZ
+  void createQuiz(String category) async {
+    isLoading(true); // start -- loading
 
-  void createQuiz(
-      {required String title,
-      String? description,
-      required String category}) async {
-    l.value = true;
-    // CreateQuiz data =
-    //     CreateQuiz(title: title, description: description, category: category);
+    // model
     Model data = Model(
-        createQuiz: CreateQuiz(
-            title: title, description: description, category: category));
-    // await _firestore.add(data.toMap()).then((v) {
-    await _firestore.add(data.toJson()).then((v) {
+      createQuiz: CreateQuiz(
+        title: title.text,
+        description: description.text,
+        category: category,
+      ),
+    );
+    // call api
+    String result = await Provider().createQuiz(data.createQuiz?.toJson());
+    // logic
+    if (result == "success") {
       Get.back();
+      title.clear();
+      description.clear();
       SnackbarCustom.successToast(msg: 'Selamat 🥳 berhasil membuat kuis');
-    }).catchError((e) {
+    } else if (result == "error") {
       Get.back();
       SnackbarCustom.errorToast(msg: 'Maaf 🙏 gagal membuat kuis');
-    });
-    l.value = false;
+    } else {
+      SnackbarCustom.errorToast(msg: 'Maaf 🙏 terjadi kesalahan sistem');
+    }
+
+    isLoading(false); // finish -- loading
   }
 }
