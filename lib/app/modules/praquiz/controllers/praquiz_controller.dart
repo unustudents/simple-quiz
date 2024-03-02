@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import '../../../data/models/models.dart';
+import 'package:simple_quiz/app/data/models/model_model.dart';
 import '../../../data/widgets/snack.dart';
 
 class PraquizController extends GetxController {
@@ -32,18 +32,25 @@ class PraquizController extends GetxController {
     required String option4,
   }) async {
     l.value = true;
-    AddQuistion data = AddQuistion(
-      question: question,
-      optionTrue: optionTrue,
-      option2: option2,
-      option3: option3,
-      option4: option4,
-    );
+    // AddQuistion data = AddQuistion(
+    //   question: question,
+    //   optionTrue: optionTrue,
+    //   option2: option2,
+    //   option3: option3,
+    //   option4: option4,
+    // );
+    var data = Model(
+        addQuiz: AddQuiz(
+            question: question,
+            optionTrue: optionTrue,
+            option2: option2,
+            option3: option3,
+            option4: option4));
 
     await _firestore
         .doc(uid)
         .collection('pretest')
-        .add(data.toMap())
+        .add(data.addQuiz!.toJson())
         .then((value) {
       Get.back();
       SnackbarCustom.successToast(msg: 'Selamat 🥳 berhasil menambah kuis');

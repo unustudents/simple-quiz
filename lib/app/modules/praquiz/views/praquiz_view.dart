@@ -10,7 +10,7 @@ import '../../../data/core/extentions.dart';
 import '../controllers/praquiz_controller.dart';
 
 class PraquizView extends GetView<PraquizController> {
-  const PraquizView({Key? key}) : super(key: key);
+  const PraquizView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,23 +52,26 @@ class PraquizView extends GetView<PraquizController> {
               // harus paling atas supaya bisa di posisi paling bawah
               // kalau di bawah variabel maka akan menjalankan variabelnya dulu
               if (index == controller.qnaList.value.length) {
-                return buttonBlueObx(
-                    l: controller.l.value,
-                    onPressed: controller.record.values.length !=
-                            controller.qnaList.value.length
-                        ? null
-                        : () {
-                            Get.toNamed(Routes.MATERI);
-                            // Get.bottomSheet(
-                            //   CardCustom.formBottomSheet(
-                            //     children: [
-                            //       Obx(() => Text(controller.record.values.length
-                            //           .toString()))
-                            //     ],
-                            //   ),
-                            // );
-                          },
-                    teks: 'NEXT');
+                return Obx(
+                  () => buttonBlueObx(
+                      l: controller.l.value,
+                      onPressed: controller.record.values.length !=
+                              controller.qnaList.value.length
+                          ? null
+                          : () {
+                              Get.toNamed(Routes.MATERI,
+                                  arguments: controller.uid);
+                              // Get.bottomSheet(
+                              //   CardCustom.formBottomSheet(
+                              //     children: [
+                              //       Obx(() => Text(controller.record.values.length
+                              //           .toString()))
+                              //     ],
+                              //   ),
+                              // );
+                            },
+                      teks: 'NEXT'),
+                );
               }
 
               // variabel
