@@ -15,6 +15,7 @@ abstract class Routes {
   static const ORGANISATION = _Paths.ORGANISATION;
   static const ALLQUIZ = _Paths.ALLQUIZ;
   static const MATERI = _Paths.MATERI;
+  static const QUIZ = _Paths.QUIZ;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const ORGANISATION = '/organisation';
   static const ALLQUIZ = '/allquiz';
   static const MATERI = '/materi';
+  static const QUIZ = '/quiz';
 }
