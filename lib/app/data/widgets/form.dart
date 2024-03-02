@@ -6,12 +6,14 @@ class Formulir {
           {TextEditingController? ctr,
           required String title,
           IconData? icon,
-          String? Function(String?)? validator}) =>
+          String? Function(String?)? validator,
+          int? maxLine}) =>
       _form(
         l: title,
         c: ctr,
         i: icon ?? Icons.person_2_rounded,
         k: TextInputType.text,
+        ml: maxLine,
         v: validator ??
             (p0) {
               if (GetUtils.isNullOrBlank(p0) == true) {
@@ -87,6 +89,7 @@ class Formulir {
     Widget? s,
     bool o = false,
     String? Function(String?)? v,
+    int? ml,
   }) {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -102,6 +105,7 @@ class Formulir {
         prefixIcon: Icon(i, color: Colors.grey.shade500),
         suffixIcon: s,
       ),
+      maxLines: ml,
       obscureText: o,
       keyboardType: k,
       validator: v,

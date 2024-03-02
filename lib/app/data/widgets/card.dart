@@ -52,12 +52,12 @@ class CardCustom {
         selected: selected,
         style: ListTileStyle.drawer,
         onTap: onTap,
-        title: Text(title),
+        title: Text(title.toString()),
         subtitle: null,
         leading: CircleAvatar(
           backgroundColor: Colors.white,
           child: Text(
-            teks,
+            teks.toString(),
             style: const TextStyle(fontWeight: FontWeight.w600),
           ),
         ),

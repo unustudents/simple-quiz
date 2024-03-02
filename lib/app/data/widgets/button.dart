@@ -13,7 +13,7 @@ ElevatedButton buttonBlueObx(
     style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.biruTua,
         foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 15)),
+        padding: const EdgeInsets.all(15)),
     child: l
         ? const CircularProgressIndicator(
             backgroundColor: Colors.amber, color: Colors.white)
