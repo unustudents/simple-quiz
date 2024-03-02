@@ -1,14 +1,12 @@
 class Model {
-  UserModel? userModel;
+  User? user;
   CreateQuiz? createQuiz;
   AddQuiz? addQuiz;
 
-  Model({this.userModel, this.createQuiz, this.addQuiz});
+  Model({this.user, this.createQuiz, this.addQuiz});
 
   Model.fromJson(Map<String, dynamic> json) {
-    userModel = json['user_model'] != null
-        ? UserModel?.fromJson(json['user_model'])
-        : null;
+    user = json['user'] != null ? User?.fromJson(json['user']) : null;
     createQuiz = json['create_quiz'] != null
         ? CreateQuiz?.fromJson(json['create_quiz'])
         : null;
@@ -18,8 +16,8 @@ class Model {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    if (userModel != null) {
-      data['user_model'] = userModel?.toJson();
+    if (user != null) {
+      data['user'] = user?.toJson();
     }
     if (createQuiz != null) {
       data['create_quiz'] = createQuiz?.toJson();
@@ -31,13 +29,13 @@ class Model {
   }
 }
 
-class UserModel {
+class User {
   String? name;
   String? email;
 
-  UserModel({this.name, this.email});
+  User({this.name, this.email});
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     email = json['email'];
   }
