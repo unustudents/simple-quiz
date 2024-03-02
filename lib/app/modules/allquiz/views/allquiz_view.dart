@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:simple_quiz/app/data/providers/provider.dart';
 
 import '../../../data/constant/colors.dart';
 import '../../../data/core/extentions.dart';
@@ -16,20 +17,20 @@ class AllquizView extends GetView<AllquizController> {
   Widget build(BuildContext context) {
     // variabel
     Map<String, dynamic>? data = Get.arguments;
-    var title = TextEditingController();
-    var description = TextEditingController();
     final formkeyAddQuiz = GlobalKey<FormState>();
     Map<String, TextEditingController> abjad = {
-      'Judul': title,
-      'Deskripsi': description
+      'Judul': controller.title,
+      'Deskripsi': controller.description
     };
+    Provider provider = Provider();
 
     return Scaffold(
       appBar: AppBar(title: Text('Semua Kuis - ${data?["title"]}')),
       body: Padding(
         padding: EdgeInsets.all(3.0.wp),
         child: StreamBuilder(
-          stream: controller.fetchAllQuiz("${data?['uid']}"),
+          stream: provider.readAllQuiz("${data?['uid']}"),
+          // stream: controller.fetchAllQuiz("${data?['uid']}"),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -54,11 +55,12 @@ class AllquizView extends GetView<AllquizController> {
                       var sample = snapshot.data!.docs.elementAt(index);
 
                       return CardCustom.cardQuiz(
-                          onTap: () =>
-                              Get.toNamed(Routes.PRAQUIZ, arguments: sample.id),
-                          index: index,
-                          title: sample.data()['title'],
-                          subtitle: sample.data()['description']);
+                        onTap: () =>
+                            Get.toNamed(Routes.PRAQUIZ, arguments: sample.id),
+                        index: index,
+                        title: sample.data()['title'].toString(),
+                        subtitle: sample.data()['description'].toString(),
+                      );
                     },
                     itemCount: snapshot.data!.docs.length,
                     separatorBuilder: (BuildContext context, int index) =>
@@ -96,13 +98,10 @@ class AllquizView extends GetView<AllquizController> {
               // tombol
               Obx(
                 () => buttonBlueObx(
-                    l: controller.l.value,
+                    l: controller.isLoading.value,
                     onPressed: () {
                       if (formkeyAddQuiz.currentState!.validate()) {
-                        controller.createQuiz(
-                            title: title.text,
-                            description: description.text,
-                            category: data?['uid']);
+                        controller.createQuiz(data?['uid']);
                       }
                     },
                     teks: 'TAMBAH'),
