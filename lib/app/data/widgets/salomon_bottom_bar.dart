@@ -5,7 +5,7 @@ class SalomonBottomBar extends StatelessWidget {
   ///
   /// https://dribbble.com/shots/5925052-Google-Bottom-Bar-Navigation-Pattern/
   const SalomonBottomBar({
-    Key? key,
+    super.key,
     required this.items,
     this.backgroundColor,
     this.currentIndex = 0,
@@ -20,7 +20,7 @@ class SalomonBottomBar extends StatelessWidget {
     this.itemPadding = const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
     this.duration = const Duration(milliseconds: 500),
     this.curve = Curves.easeOutQuint,
-  }) : super(key: key);
+  });
 
   /// A list of tabs to display, ie `Home`, `Likes`, etc
   final List<SalomonBottomBarItem> items;

@@ -1,3 +1,47 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class MateriController extends GetxController {}
+import '../../../data/widgets/snack.dart';
+
+class MateriController extends GetxController {
+  String uid = Get.arguments;
+  final _firebase = FirebaseFirestore.instance.collection("all_quiz");
+  late YoutubePlayerController cYoutube;
+  RxBool isPlayerReady = false.obs;
+  final String idYoutube = YoutubePlayer.convertUrlToId(
+      "https://youtu.be/ExSaQtW3EVA?si=KAAGz5Omi44-pk3p")!;
+
+  @override
+  void onInit() {
+    getDescription().then((value) => value.docs);
+    super.onInit();
+    cYoutube = YoutubePlayerController(
+      initialVideoId: idYoutube,
+      flags: const YoutubePlayerFlags(autoPlay: false),
+    );
+  }
+
+  @override
+  void onClose() {
+    cYoutube.dispose();
+    super.onClose();
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getDescription() async {
+    return await _firebase.doc(uid).collection("materi").get();
+  }
+
+  Future<Null> addDescription(String deskripsi, String link) async {
+    return await _firebase
+        .doc(uid)
+        .collection("materi")
+        .add({"materi": deskripsi, "youtube": link}).then((value) {
+      Get.back();
+      SnackbarCustom.successToast(msg: 'Selamat 🥳 berhasil menambah materi');
+    }).catchError((e) {
+      Get.back();
+      SnackbarCustom.errorToast(msg: 'Maaf 🙏 gagal menambah materi');
+    });
+  }
+}
