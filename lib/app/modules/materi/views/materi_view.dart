@@ -6,7 +6,7 @@ import 'package:simple_quiz/app/data/widgets/button.dart';
 import 'package:simple_quiz/app/data/widgets/card.dart';
 import 'package:simple_quiz/app/data/widgets/form.dart';
 import 'package:simple_quiz/app/routes/app_pages.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+// import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../data/constant/colors.dart';
 import '../controllers/materi_controller.dart';
@@ -31,21 +31,23 @@ class MateriView extends GetView<MateriController> {
             case ConnectionState.waiting:
               return const Center(child: CircularProgressIndicator());
             default:
-              if (snapshot.hasData) {
-                print(snapshot.hasData);
+              if (snapshot.data!.docs.isNotEmpty) {
+                var data = snapshot.data!.docs.first.data();
+                print(snapshot.data!.docs.isEmpty);
+                print(data);
                 return SingleChildScrollView(
                   child: Column(
                     children: [
-                      YoutubePlayerBuilder(
-                        player: YoutubePlayer(
-                          controller: controller.cYoutube,
-                          showVideoProgressIndicator: true,
-                          progressIndicatorColor: Colors.red,
-                        ),
-                        builder: (contex, player) {
-                          return player;
-                        },
-                      ),
+                      // YoutubePlayerBuilder(
+                      //   player: YoutubePlayer(
+                      //     controller: controller.cYoutube,
+                      //     showVideoProgressIndicator: true,
+                      //     progressIndicatorColor: Colors.red,
+                      //   ),
+                      //   builder: (contex, player) {
+                      //     return player;
+                      //   },
+                      // ),
                       const SizedBox(height: 20),
                       Padding(
                         padding: const EdgeInsets.all(15),
@@ -58,8 +60,9 @@ class MateriView extends GetView<MateriController> {
                                   fontSize: 19, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 10),
-                            const Text(
-                              "disini isinya materi - materi ynag menejelaskna tentang tes ini dan menjelaskan tentang video di atas, sepertinya seperti itu sih kalau enggak salah",
+                            Text(
+                              data["materi"].toString(),
+                              // "disini isinya materi - materi ynag menejelaskna tentang tes ini dan menjelaskan tentang video di atas, sepertinya seperti itu sih kalau enggak salah",
                               textAlign: TextAlign.justify,
                             ),
                             const SizedBox(height: 20),
@@ -67,7 +70,8 @@ class MateriView extends GetView<MateriController> {
                               width: double.infinity,
                               child: buttonBlueObx(
                                   l: false,
-                                  onPressed: () => Get.toNamed(Routes.QUIZ),
+                                  onPressed: () => Get.toNamed(Routes.QUIZ,
+                                      arguments: controller.uid),
                                   teks: "Next to Quiz"),
                             )
                           ],
