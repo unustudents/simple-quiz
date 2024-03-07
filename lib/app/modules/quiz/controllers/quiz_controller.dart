@@ -1,23 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class QuizController extends GetxController {
-  //TODO: Implement QuizController
+  String uid = Get.arguments;
+  // VARIABLE
+  final _firestore = FirebaseFirestore.instance.collection('all_quiz');
+  RxMap record = {}.obs;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  // STREAM SOAL
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamSoal() async* {
+    yield* _firestore.doc(uid).collection('qna').snapshots();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  // JAWABAN
+  RxMap<String, Object> answerQuestion(
+      {required String uid,
+      required String answerTrue,
+      required String answerCurrent}) {
+    final bool status = answerCurrent == answerTrue;
+    return record[uid] =
+        {'answer': answerTrue, 'current': answerCurrent, 'status': status}.obs;
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
