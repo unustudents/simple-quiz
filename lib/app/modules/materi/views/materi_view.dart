@@ -6,6 +6,7 @@ import 'package:simple_quiz/app/data/widgets/button.dart';
 import 'package:simple_quiz/app/data/widgets/card.dart';
 import 'package:simple_quiz/app/data/widgets/form.dart';
 import 'package:simple_quiz/app/routes/app_pages.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 // import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../data/constant/colors.dart';
@@ -38,16 +39,16 @@ class MateriView extends GetView<MateriController> {
                 return SingleChildScrollView(
                   child: Column(
                     children: [
-                      // YoutubePlayerBuilder(
-                      //   player: YoutubePlayer(
-                      //     controller: controller.cYoutube,
-                      //     showVideoProgressIndicator: true,
-                      //     progressIndicatorColor: Colors.red,
-                      //   ),
-                      //   builder: (contex, player) {
-                      //     return player;
-                      //   },
-                      // ),
+                      YoutubePlayerBuilder(
+                        player: YoutubePlayer(
+                          controller: controller.cYoutube,
+                          showVideoProgressIndicator: true,
+                          progressIndicatorColor: Colors.red,
+                        ),
+                        builder: (contex, player) {
+                          return player;
+                        },
+                      ),
                       const SizedBox(height: 20),
                       Padding(
                         padding: const EdgeInsets.all(15),
